@@ -72,9 +72,18 @@ resource "aws_instance" "luqman_server" {
       sleep 30 && \
       ANSIBLE_HOST_KEY_CHECKING=False \
       ansible-playbook -i '${self.public_ip},' -u ec2-user \
-      --private-key ~/.ssh/id_rsa deploy.yml
+      --private-key id_rsa deploy.yml
     EOT
   }
+
+#    provisioner "local-exec" {
+#     command = <<EOT
+#       sleep 30 && \
+#       ANSIBLE_HOST_KEY_CHECKING=False \
+#       ansible-playbook -i '${self.public_ip},' -u ec2-user \
+#       --private-key ~/.ssh/id_rsa deploy.yml
+#     EOT
+#   }
 }
 
 # ----------------------------
