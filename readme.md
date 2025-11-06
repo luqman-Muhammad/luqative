@@ -7,7 +7,6 @@ It creates an EC2 instance, installs Docker and Nginx, and deploys a simple stat
 
 ## 📁 Project Structure
 
-.
 ├── .github/
 │ └── workflows/
 │ └── deploy.yml # GitHub Actions CI/CD pipeline
@@ -18,8 +17,6 @@ It creates an EC2 instance, installs Docker and Nginx, and deploys a simple stat
 ├── id_rsa.pub # Public SSH key for EC2 key pair
 └── README.md # Project documentation
 
-markdown
-Copy code
 
 ---
 
