@@ -291,8 +291,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Luqman Muhammad**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+- GitHub: [@luqative](https://github.com/luqative)
 
 ---
 
