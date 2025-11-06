@@ -7,7 +7,7 @@ provider "aws" {
 # ----------------------------
 
 resource "aws_security_group" "luqman_security_group" {
-  name        = "luqman_security_group_new4"
+  name        = "luqman_security_group_new46"
   description = "Allow SSH, HTTP, and HTTPS inbound traffic"
 
   ingress {
