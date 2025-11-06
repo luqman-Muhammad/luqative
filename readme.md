@@ -1,137 +1,314 @@
-# 🚀 Automated Infrastructure Deployment with Terraform, Ansible & GitHub Actions
+# 🚀 Automated Infrastructure Deployment
 
-This repository automates the provisioning and configuration of a web server on **AWS EC2** using **Terraform**, **Ansible**, **Docker**, and **GitHub Actions**.  
-It creates an EC2 instance, installs Docker and Nginx, and deploys a simple static website inside a container.
+> Automated provisioning and configuration of AWS EC2 infrastructure using Terraform, Ansible, Docker, and GitHub Actions
+
+[![Terraform](https://img.shields.io/badge/Terraform-1.5.0-623CE4?logo=terraform&logoColor=white)](https://www.terraform.io/)
+[![Ansible](https://img.shields.io/badge/Ansible-Latest-EE0000?logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![Docker](https://img.shields.io/badge/Docker-Latest-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Architecture](#-architecture)
+- [Project Structure](#-project-structure)
+- [Components](#-components)
+- [Prerequisites](#-prerequisites)
+- [Setup](#-setup)
+- [Deployment](#-deployment)
+- [Cleanup](#-cleanup)
+- [Configuration](#-configuration)
+
+---
+
+## 🎯 Overview
+
+This project demonstrates a complete **Infrastructure as Code (IaC)** solution that automatically:
+
+- ✅ Provisions AWS EC2 infrastructure using **Terraform**
+- ✅ Configures servers with **Ansible** automation
+- ✅ Deploys a containerized **Nginx** web server
+- ✅ Implements **CI/CD** pipeline with GitHub Actions
+- ✅ Serves a static website with zero-downtime deployment
+
+---
+
+## 🏗 Architecture
+
+```
+┌─────────────────┐
+│  GitHub Push    │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ GitHub Actions  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐      ┌──────────────────┐
+│   Terraform     │─────▶│   AWS EC2        │
+└────────┬────────┘      └────────┬─────────┘
+         │                        │
+         ▼                        │
+┌─────────────────┐              │
+│    Ansible      │──────────────┘
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Docker + Nginx  │
+└─────────────────┘
+```
 
 ---
 
 ## 📁 Project Structure
 
+```
+.
 ├── .github/
-│ └── workflows/
-│ └── deploy.yml # GitHub Actions CI/CD pipeline
-├── Dockerfile # Nginx container setup
-├── deploy.yml # Ansible playbook for server configuration
-├── index.html # Static webpage
-├── main.tf # Terraform configuration for AWS
-├── id_rsa.pub # Public SSH key for EC2 key pair
-└── README.md # Project documentation
-
-
----
-
-## 🧩 Components Overview
-
-### **1. GitHub Actions Workflow**
-Located at `.github/workflows/deploy.yml`, this file automates the deployment pipeline:
-- **Triggers** on `push` or `pull_request` to the `main` branch.
-- **Steps:**
-  1. Checkout repository.
-  2. Setup Terraform (v1.5.0).
-  3. Configure AWS credentials using GitHub Secrets.
-  4. Run Terraform:
-     - `terraform init`
-     - `terraform validate`
-     - `terraform plan`
-     - `terraform apply -auto-approve` (for pushes to main).
-
-### **2. Terraform (main.tf)**
-Defines the AWS infrastructure:
-- **Security Group** allowing inbound SSH (22), HTTP (80), and HTTPS (443).
-- **Key Pair** using your `id_rsa.pub`.
-- **EC2 Instance** (Amazon Linux 2, `t3.micro`).
-- Automatically runs the Ansible playbook after instance creation.
-
-### **3. Ansible (deploy.yml)**
-Configures the EC2 instance to host the website:
-- Installs **Python 3.8**, **Docker**, and **Docker Compose**.
-- Adds `ec2-user` to the Docker group.
-- Installs and configures **Nginx** as a reverse proxy.
-- Copies static website files to `/home/ec2-user/webpage/`.
-- Runs Docker Compose to deploy the Nginx container serving your site.
-
-### **4. Docker (Dockerfile)**
-Defines a lightweight **Nginx** image that serves your `index.html` page.
+│   └── workflows/
+│       └── deploy.yml          # CI/CD pipeline configuration
+├── Dockerfile                   # Nginx container definition
+├── deploy.yml                   # Ansible playbook
+├── index.html                   # Static website content
+├── main.tf                      # Terraform infrastructure code
+├── id_rsa.pub                   # SSH public key
+└── README.md                    # This file
+```
 
 ---
 
-## ⚙️ How It Works
+## 🧩 Components
 
-1. Developer pushes code to the `main` branch.  
-2. GitHub Actions triggers the workflow.  
-3. Terraform initializes and applies infrastructure changes.  
-4. Terraform executes Ansible locally to configure the new EC2 instance.  
-5. Docker container runs Nginx serving the website.  
+### 1️⃣ GitHub Actions Workflow
+
+**Location:** `.github/workflows/deploy.yml`
+
+Automates the entire deployment pipeline:
+
+- **Trigger:** Push or PR to `main` branch
+- **Actions:**
+  - 🔍 Code checkout
+  - ⚙️ Terraform setup (v1.5.0)
+  - 🔐 AWS credentials configuration
+  - 🚀 Infrastructure deployment (`init` → `validate` → `plan` → `apply`)
+
+### 2️⃣ Terraform Infrastructure
+
+**Location:** `main.tf`
+
+Defines AWS resources:
+
+| Resource | Description |
+|----------|-------------|
+| **Security Group** | Allows SSH (22), HTTP (80), HTTPS (443) |
+| **Key Pair** | SSH access using `id_rsa.pub` |
+| **EC2 Instance** | Amazon Linux 2, `t3.micro`, `us-west-2` |
+| **Provisioner** | Triggers Ansible configuration post-creation |
+
+### 3️⃣ Ansible Configuration
+
+**Location:** `deploy.yml`
+
+Server configuration tasks:
+
+- 🐍 Installs Python 3.8
+- 🐳 Installs Docker & Docker Compose
+- 👤 Configures `ec2-user` permissions
+- 🌐 Deploys Nginx reverse proxy
+- 📦 Copies website files
+- ▶️ Starts Docker containers
+
+### 4️⃣ Docker Container
+
+**Location:** `Dockerfile`
+
+Lightweight Nginx image serving your static website.
 
 ---
 
-## 🔐 AWS Setup
+## 🛠 Prerequisites
 
-Before deploying, configure the following GitHub Secrets under  
-**Settings → Secrets and variables → Actions**:
+### Required Tools
 
-| Secret Name | Description |
-|--------------|-------------|
+- [Terraform](https://developer.hashicorp.com/terraform/downloads) (v1.5.0+)
+- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_install.html) (Latest)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (Configured)
+- SSH Key Pair (`id_rsa.pub`)
+
+### AWS Requirements
+
+- Valid AWS account
+- IAM user with permissions:
+  - EC2 (full access)
+  - VPC (read/write)
+  - Key Pair management
+
+---
+
+## ⚙️ Setup
+
+### 1. Configure GitHub Secrets
+
+Navigate to **Settings** → **Secrets and variables** → **Actions** and add:
+
+| Secret Name | Value |
+|-------------|-------|
 | `AWS_ACCESS_KEY_ID` | Your AWS access key |
-| `AWS_SECRET_ACCESS_KEY` | Your AWS secret access key |
+| `AWS_SECRET_ACCESS_KEY` | Your AWS secret key |
 
-Make sure your AWS user has permissions for EC2, VPC, and IAM key pair operations.
+### 2. Configure SSH Key
+
+Ensure `id_rsa.pub` is in the project root:
+
+```bash
+# Generate new key if needed
+ssh-keygen -t rsa -b 4096 -f id_rsa
+```
+
+### 3. Update Configuration
+
+Edit `main.tf` to customize:
+- AWS region (default: `us-west-2`)
+- Instance type (default: `t3.micro`)
+- AMI ID (default: `ami-0c5204531f799e0c6`)
 
 ---
 
-## 🧰 Prerequisites
+## 🚀 Deployment
 
-If you plan to test locally before pushing:
+### Automated (GitHub Actions)
 
-- [Terraform](https://developer.hashicorp.com/terraform/downloads)
-- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_install.html)
-- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- A valid `id_rsa.pub` key in the project directory.
+Simply push to the `main` branch:
 
----
+```bash
+git add .
+git commit -m "Deploy infrastructure"
+git push origin main
+```
 
-## ▶️ Manual Deployment (Optional)
+The GitHub Actions workflow will automatically:
+1. Validate your Terraform code
+2. Provision AWS infrastructure
+3. Configure the server
+4. Deploy your website
 
-You can also deploy manually without GitHub Actions:
+### Manual Deployment
+
+For local testing:
 
 ```bash
 # Initialize Terraform
 terraform init
 
-# Validate configuration
-terraform validate
-
-# See the plan
+# Preview changes
 terraform plan
 
 # Apply infrastructure
 terraform apply -auto-approve
-🌐 Output
-Once applied successfully, Terraform will output:
+```
 
-bash
-Copy code
-instance_public_ip = "xx.xx.xx.xx"
-You can visit your website at:
+---
 
-cpp
-Copy code
-http://<instance_public_ip>
-🧹 Cleanup
-To destroy all created resources and avoid charges:
+## 🌐 Accessing Your Website
 
-bash
-Copy code
+After successful deployment, Terraform outputs the instance IP:
+
+```
+Outputs:
+instance_public_ip = "54.123.45.67"
+```
+
+Visit your website at:
+```
+http://54.123.45.67
+```
+
+⏱ **Note:** Allow 2-3 minutes for the Ansible playbook to complete server configuration.
+
+---
+
+## 🧹 Cleanup
+
+To destroy all resources and stop AWS charges:
+
+```bash
 terraform destroy -auto-approve
-🏁 Summary
-Tool	Purpose
-Terraform	Provision AWS infrastructure
-Ansible	Configure EC2 instance
-Docker + Nginx	Serve the static website
-GitHub Actions	Automate CI/CD pipeline
+```
 
-Author: Luqman Muhammad
-Region: us-west-2
-Instance Type: t3.micro
-AMI: ami-0c5204531f799e0c6
+> ⚠️ **Warning:** This action is irreversible and will delete all created infrastructure.
 
+---
+
+## 📊 Configuration
+
+### Default Settings
+
+| Parameter | Value |
+|-----------|-------|
+| **Region** | us-west-2 |
+| **Instance Type** | t3.micro |
+| **AMI** | ami-0c5204531f799e0c6 (Amazon Linux 2) |
+| **Web Server** | Nginx (containerized) |
+| **Automation** | GitHub Actions |
+
+### Customization
+
+To modify instance settings, edit `main.tf`:
+
+```hcl
+resource "aws_instance" "web" {
+  instance_type = "t3.small"  # Change instance size
+  # ... other settings
+}
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## 👤 Author
+
+**Luqman Muhammad**
+
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+
+---
+
+## 🙏 Acknowledgments
+
+- [Terraform Documentation](https://www.terraform.io/docs)
+- [Ansible Documentation](https://docs.ansible.com/)
+- [AWS Documentation](https://docs.aws.amazon.com/)
+- [Docker Documentation](https://docs.docker.com/)
+
+---
+
+<div align="center">
+
+**⭐ Star this repository if you find it helpful!**
+
+Made with ❤️ by Luqman Muhammad
+
+</div>
