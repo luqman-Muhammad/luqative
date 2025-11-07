@@ -65,7 +65,7 @@ This project demonstrates a complete **Infrastructure as Code (IaC)** solution t
 
 ---
 
-## 📁 Project Structure
+# Project Structure
 
 ```
 .
@@ -82,9 +82,9 @@ This project demonstrates a complete **Infrastructure as Code (IaC)** solution t
 
 ---
 
-## 🧩 Components
+## Components
 
-### 1️⃣ GitHub Actions Workflow
+### GitHub Actions Workflow
 
 **Location:** `.github/workflows/deploy.yml`
 
@@ -150,7 +150,7 @@ Lightweight Nginx image serving your static website.
 
 ---
 
-## ⚙️ Setup
+##  Setup
 
 ### 1. Configure GitHub Secrets
 
@@ -214,7 +214,7 @@ terraform apply -auto-approve
 
 ---
 
-## 🌐 Accessing Your Website
+## Accessing Your Website
 
 After successful deployment, Terraform outputs the instance IP:
 
@@ -232,7 +232,7 @@ http://54.123.45.67
 
 ---
 
-## 🧹 Cleanup
+## Cleanup
 
 To destroy all resources and stop AWS charges:
 
@@ -240,11 +240,11 @@ To destroy all resources and stop AWS charges:
 terraform destroy -auto-approve
 ```
 
-> ⚠️ **Warning:** This action is irreversible and will delete all created infrastructure.
+> **Warning:** This action is irreversible and will delete all created infrastructure.
 
 ---
 
-## 📊 Configuration
+## Configuration
 
 ### Default Settings
 
@@ -269,7 +269,7 @@ resource "aws_instance" "web" {
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please:
 
@@ -281,7 +281,7 @@ Contributions are welcome! Please:
 
 ---
 
-## 📝 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
@@ -295,7 +295,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Terraform Documentation](https://www.terraform.io/docs)
 - [Ansible Documentation](https://docs.ansible.com/)
