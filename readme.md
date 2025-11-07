@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [Architecture](#-architecture)
@@ -23,19 +23,19 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This project demonstrates a complete **Infrastructure as Code (IaC)** solution that automatically:
 
-- ✅ Provisions AWS EC2 infrastructure using **Terraform**
-- ✅ Configures servers with **Ansible** automation
-- ✅ Deploys a containerized **Nginx** web server
-- ✅ Implements **CI/CD** pipeline with GitHub Actions
-- ✅ Serves a static website with zero-downtime deployment
+-  Provisions AWS EC2 infrastructure using **Terraform**
+-  Configures servers with **Ansible** automation
+-  Deploys a containerized **Nginx** web server
+-  Implements **CI/CD** pipeline with GitHub Actions
+-  Serves a static website with zero-downtime deployment
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ```
 ┌─────────────────┐
@@ -92,12 +92,12 @@ Automates the entire deployment pipeline:
 
 - **Trigger:** Push or PR to `main` branch
 - **Actions:**
-  - 🔍 Code checkout
-  - ⚙️ Terraform setup (v1.5.0)
-  - 🔐 AWS credentials configuration
-  - 🚀 Infrastructure deployment (`init` → `validate` → `plan` → `apply`)
+  -  Code checkout
+  -  Terraform setup (v1.5.0)
+  -  AWS credentials configuration
+  -  Infrastructure deployment (`init` → `validate` → `plan` → `apply`)
 
-### 2️⃣ Terraform Infrastructure
+### Terraform Infrastructure
 
 **Location:** `main.tf`
 
@@ -110,20 +110,20 @@ Defines AWS resources:
 | **EC2 Instance** | Amazon Linux 2, `t3.micro`, `us-west-2` |
 | **Provisioner** | Triggers Ansible configuration post-creation |
 
-### 3️⃣ Ansible Configuration
+### Ansible Configuration
 
 **Location:** `deploy.yml`
 
 Server configuration tasks:
 
-- 🐍 Installs Python 3.8
-- 🐳 Installs Docker & Docker Compose
-- 👤 Configures `ec2-user` permissions
-- 🌐 Deploys Nginx reverse proxy
-- 📦 Copies website files
-- ▶️ Starts Docker containers
+-  Installs Python 3.8
+-  Installs Docker & Docker Compose
+-  Configures `ec2-user` permissions
+-  Deploys Nginx reverse proxy
+-  Copies website files
+- ▶ Starts Docker containers
 
-### 4️⃣ Docker Container
+### Docker Container
 
 **Location:** `Dockerfile`
 
@@ -131,7 +131,7 @@ Lightweight Nginx image serving your static website.
 
 ---
 
-## 🛠 Prerequisites
+## Prerequisites
 
 ### Required Tools
 
@@ -179,7 +179,7 @@ Edit `main.tf` to customize:
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Automated (GitHub Actions)
 
@@ -225,10 +225,10 @@ instance_public_ip = "54.123.45.67"
 
 Visit your website at:
 ```
-http://54.123.45.67
+http://34.222.171.115/
 ```
 
-⏱ **Note:** Allow 2-3 minutes for the Ansible playbook to complete server configuration.
+ **Note:** Allow 2-3 minutes for the Ansible playbook to complete server configuration.
 
 ---
 
@@ -287,7 +287,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 👤 Author
+## Author
 
 **Luqman Muhammad**
 
