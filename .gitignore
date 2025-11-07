@@ -5,8 +5,7 @@
 .terraform.lock.hcl
 
 # SSH Keys
-zander
-zander.pub
+id_rsa.pub
 *.pem
 
 # Ansible
