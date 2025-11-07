@@ -47,6 +47,8 @@ variable "key_name" {
 # ----------------------------
 # Key Pair
 # ----------------------------
+
+
 resource "aws_key_pair" "luqman_key" {
   key_name   = var.key_name
   public_key = file("id_rsa.pub")
@@ -55,6 +57,8 @@ resource "aws_key_pair" "luqman_key" {
 # ----------------------------
 # EC2 Instance
 # ----------------------------
+
+
 resource "aws_instance" "luqman_server" {
   ami                         = "ami-0c5204531f799e0c6"
   instance_type               = "t3.micro"
@@ -67,6 +71,7 @@ resource "aws_instance" "luqman_server" {
   }
 
   # Wait for the instance to be ready, then run Ansible playbook locally
+
   provisioner "local-exec" {
     command = <<EOT
       sleep 30 && \
@@ -89,7 +94,9 @@ resource "aws_instance" "luqman_server" {
 # ----------------------------
 # Output
 # ----------------------------
+
+
 output "instance_public_ip" {
-  description = "Public IP of Arinze's EC2 server"
+  description = "Public IP of luqman's EC2 server"
   value       = aws_instance.luqman_server.public_ip
 }

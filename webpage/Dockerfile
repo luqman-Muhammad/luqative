@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-# Copy your HTML into nginx default html folder
+# Copy custom index.html to the nginx html directory
 COPY index.html /usr/share/nginx/html/
 
 # Expose port 80 (optional — docker compose already maps ports)
